@@ -20,20 +20,34 @@
         Ball.prototype.render = function (context) {
             context.strokeStyle = 'blue';
             context.setLineDash([0,0]);
-            context.strokeRect(85, 85, this.height, this.width);
+            context.strokeRect(85, 145, this.height, this.width);
         };
 
         function Paddle(x, y) {
                     this.x = x;
                     this.y = y;
                     this.width = 4;
-                    this.height = 30;
+                    this.height = 35;
         }
         Paddle.prototype.render = function (context) {
             context.strokeStyle = 'pink';
             context.setLineDash([0,0]);
             context.strokeRect(this.x, this.y, this.width, this.height);
         };
+
+        function Player(paddle) {
+           this.paddle = paddle;
+           this.render = function (context) {
+               this.paddle.render(context);
+           };
+        }
+
+        function Computer(paddle) {
+           this.paddle = paddle;
+           this.render = function (context) {
+               this.paddle.render(context);
+           };
+        }
                 
         
         window.onload = function(){
@@ -56,8 +70,8 @@
             context.setLineDash([8, 12]);
 
             context.beginPath();
-            context.moveTo(295,35);
-            context.lineTo(295, 355);
+            context.moveTo(300,35);
+            context.lineTo(300, 355);
             context.stroke();
             
             //ball
@@ -65,8 +79,15 @@
             ball.render(context);
             
             //player
-            var playerPaddle = new Paddle(55, 60);
-            playerPaddle.render(context);
+            var playerPaddle = new Paddle(55, 110);
+            var player1 = new Player(playerPaddle);
+            player1.render(context);
+            
+            //computer
+            var computerPaddle = new Paddle(535, 160);
+            var comp = new Computer(computerPaddle);
+            comp.render(context);
+            
         };
 
 
