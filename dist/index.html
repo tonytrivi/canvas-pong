@@ -2,13 +2,13 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Bloc Base Project</title>
+    <title>Super Pong</title>
     <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
     
     
-    <canvas id='pong-table' width="600" height="400" style="background-color:lightgray"/>
+    <canvas id='pong-table' width="600" height="400" style="background-color:#00b3b3"/>
     
     
     <script src="/scripts/app.js"></script>
@@ -20,8 +20,21 @@
         Ball.prototype.render = function (context) {
             context.strokeStyle = 'blue';
             context.setLineDash([0,0]);
-            context.strokeRect(65, 65, this.height, this.width);
+            context.strokeRect(85, 85, this.height, this.width);
         };
+
+        function Paddle(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.width = 4;
+                    this.height = 30;
+        }
+        Paddle.prototype.render = function (context) {
+            context.strokeStyle = 'pink';
+            context.setLineDash([0,0]);
+            context.strokeRect(this.x, this.y, this.width, this.height);
+        };
+                
         
         window.onload = function(){
             
@@ -32,7 +45,7 @@
 
             var tableWidth = 525;
             var tableHeight = 330;
-            var tableBorderWidth = 12;
+            var tableBorderWidth = 10;
             var defaultLineColor = 'orange';
 
             context.strokeStyle = defaultLineColor;
@@ -50,6 +63,10 @@
             //ball
             var ball = new Ball();
             ball.render(context);
+            
+            //player
+            var playerPaddle = new Paddle(55, 60);
+            playerPaddle.render(context);
         };
 
 
