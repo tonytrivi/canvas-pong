@@ -37,22 +37,20 @@
 
         function Player(paddle) {
            this.paddle = paddle;
-           this.render = function (context) {
-               this.paddle.render(context);
-           };
+           
         }
+        Player.prototype.render = function (context) {
+            this.paddle.render(context);
+        };
 
         function Computer(paddle) {
            this.paddle = paddle;
-           this.render = function (context) {
-               this.paddle.render(context);
-           };
         }
+        Computer.prototype.render = function (context) {
+            this.paddle.render(context);
+        };
                 
-        
         window.onload = function(){
-            
-            
             //draw table outline
             var canvas = document.getElementById('pong-table');
             var context = canvas.getContext('2d');
@@ -87,10 +85,7 @@
             var computerPaddle = new Paddle(535, 160);
             var comp = new Computer(computerPaddle);
             comp.render(context);
-            
         };
-
-
     </script>
 </body>
 </html>
