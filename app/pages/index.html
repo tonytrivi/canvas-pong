@@ -11,46 +11,20 @@
     <canvas id='pong-table' width="600" height="400" style="background-color:#00b3b3"/>
     
     
-    <script src="/scripts/app.js"></script>
-    <script>
-        function Ball() {  
-            this.height = 1;
-            this.width = 1;
-        }
-        Ball.prototype.render = function (context) {
-            context.strokeStyle = 'blue';
-            context.setLineDash([0,0]);
-            context.strokeRect(85, 145, this.height, this.width);
-        };
-
-        function Paddle(x, y) {
-                    this.x = x;
-                    this.y = y;
-                    this.width = 4;
-                    this.height = 35;
-        }
-        Paddle.prototype.render = function (context) {
-            context.strokeStyle = 'pink';
-            context.setLineDash([0,0]);
-            context.strokeRect(this.x, this.y, this.width, this.height);
-        };
-
-        function Player(paddle) {
-           this.paddle = paddle;
-           
-        }
-        Player.prototype.render = function (context) {
-            this.paddle.render(context);
-        };
-
-        function Computer(paddle) {
-           this.paddle = paddle;
-        }
-        Computer.prototype.render = function (context) {
-            this.paddle.render(context);
-        };
-                
+ <!--   <script type="text/javascript" src="../scripts/render.js"></script> -->
+    <script type="text/javascript" src="../scripts/fixtures/Ball.js"></script>
+    <script type="text/javascript" src="../scripts/fixtures/Paddle.js"></script>
+    <script type="text/javascript" src="../scripts/fixtures/Player.js"></script>
+    <script type="text/javascript" src="../scripts/fixtures/Computer.js"></script>
+    <script>    
         window.onload = function(){
+            var render = function (context) {
+                ball.render(context);
+                player1.render(context);
+                comp.render(context);
+            };
+
+            
             //draw table outline
             var canvas = document.getElementById('pong-table');
             var context = canvas.getContext('2d');
@@ -72,19 +46,12 @@
             context.lineTo(300, 355);
             context.stroke();
             
-            //ball
+            //ball and players
             var ball = new Ball();
-            ball.render(context);
+            var player1 = new Player();
+            var comp = new Computer();
             
-            //player
-            var playerPaddle = new Paddle(55, 110);
-            var player1 = new Player(playerPaddle);
-            player1.render(context);
-            
-            //computer
-            var computerPaddle = new Paddle(535, 160);
-            var comp = new Computer(computerPaddle);
-            comp.render(context);
+            render(context);
         };
     </script>
 </body>
