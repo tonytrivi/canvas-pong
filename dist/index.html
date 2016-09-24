@@ -16,41 +16,10 @@
     <script type="text/javascript" src="../scripts/fixtures/Paddle.js"></script>
     <script type="text/javascript" src="../scripts/fixtures/Player.js"></script>
     <script type="text/javascript" src="../scripts/fixtures/Computer.js"></script>
+    <script type="text/javascript" src="../scripts/main.js"></script>
     <script>    
         window.onload = function(){
-            var render = function (context) {
-                ball.render(context);
-                player1.render(context);
-                comp.render(context);
-            };
-
-            //draw table outline
-            var canvas = document.getElementById('pong-table');
-            var context = canvas.getContext('2d');
-
-            var tableWidth = 525;
-            var tableHeight = 330;
-            var tableBorderWidth = 10;
-            var defaultLineColor = 'orange';
-
-            context.strokeStyle = defaultLineColor;
-            context.lineWidth = tableBorderWidth;
-            context.strokeRect(35, 35, tableWidth, tableHeight);
-            
-            //mid line
-            context.setLineDash([8, 12]);
-
-            context.beginPath();
-            context.moveTo(300,35);
-            context.lineTo(300, 355);
-            context.stroke();
-            
-            //ball and players
-            var ball = new Ball();
-            var player1 = new Player();
-            var comp = new Computer();
-            
-            render(context);
+            drawCourt();
         };
     </script>
 </body>
