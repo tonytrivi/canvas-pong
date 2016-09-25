@@ -20,6 +20,10 @@
     <script>    
         window.onload = function(){
             drawCourt();
+            window.addEventListener("keydown", keyDownHandler, true);
+            
+            //start the animation
+            step();
         };
     </script>
 </body>

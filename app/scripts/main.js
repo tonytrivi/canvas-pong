@@ -1,9 +1,58 @@
 /*
+**desc court
+*/
+var canvas = null;
+var context = null;
+
+/*
+**desc game elements
+*/
+var ball = null;
+var player1 = null;
+var comp = null;
+
+/*
+**desc initial game prep
+*/
+var initializeGameElements = function () {
+    canvas = document.getElementById('pong-table');
+    context = canvas.getContext('2d');
+    ball = new Ball();
+    player1 = new Player();
+    comp = new Computer();
+};
+
+/*
+**desc each animation step in the game loop
+*/
+var step = function () {
+    //console.log(player1.paddle.y);
+    //console.log(player1.paddle.x);
+    //console.log(player1.paddle.width);
+    //console.log(player1.paddle.height);
+    render();
+    animate(step);
+};
+
+/*
+**desc animates the game
+*/
+var animate = window.requestAnimationFrame || 
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        window.oRequestAnimationFrame      ||
+        window.msRequestAnimationFrame     ||
+        function(callback) { window.setTimeout(callback, 1000/30) };
+
+/*
 **desc renders an object
 **returns void
 */
-var render = function (context, obj) {
-    obj.render(context);
+var render = function () {
+    context.clearRect(0, 0, 600, 400);
+    ball.render(context);
+    player1.render(context);
+    comp.render(context);
 };
 
 /*
@@ -11,10 +60,9 @@ var render = function (context, obj) {
 **returns void
 */
 var drawCourt = function() {
+    initializeGameElements();
+    
     //draw table outline
-    var canvas = document.getElementById('pong-table');
-    var context = canvas.getContext('2d');
-
     var tableWidth = 525;
     var tableHeight = 330;
     var tableBorderWidth = 10;
@@ -31,14 +79,27 @@ var drawCourt = function() {
     context.moveTo(300,35);
     context.lineTo(300, 355);
     context.stroke();
-
-    //ball and players
-    var ball = new Ball();
-    var player1 = new Player();
-    var comp = new Computer();
-
-    render(context, ball);
-    render(context, player1);
-    render(context, comp);
     
+    //reset line dash
+    context.setLineDash([0,0]);
+};
+
+/*
+**desc moves the player's paddle
+*/
+var movePlayer = function (e) {    
+    if (e.keyCode == "38") {
+        player1.paddle.move("up");
+    }
+    
+    if (e.keyCode == "40") {
+        player1.paddle.move("down");
+    }
+};
+
+/*
+**desc callback function for keypress
+*/
+var keyDownHandler = function (e) {
+    movePlayer(e);
 };
