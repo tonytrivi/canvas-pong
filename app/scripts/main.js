@@ -23,13 +23,9 @@ var initializeGameElements = function () {
 };
 
 /*
-**desc each animation step in the game loop
+**desc renders game elements in the game loop
 */
 var step = function () {
-    //console.log(player1.paddle.y);
-    //console.log(player1.paddle.x);
-    //console.log(player1.paddle.width);
-    //console.log(player1.paddle.height);
     render();
     animate(step);
 };
@@ -64,7 +60,7 @@ var drawCourt = function() {
     //draw table outline
     var tableWidth = 525;
     var tableHeight = 330;
-    var tableBorderWidth = 8;
+    var tableBorderWidth = 9;
     var defaultLineColor = 'orange';
 
     context.strokeStyle = defaultLineColor;
@@ -87,7 +83,7 @@ var drawCourt = function() {
 **desc clears a place for the paddle
 */
 var clearPaddle = function () {
-    context.clearRect(55, 39, 10, 322);
+    context.clearRect(55, 40, 10, 320);
 };
 
 /*
