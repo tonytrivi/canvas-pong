@@ -49,7 +49,6 @@ var animate = window.requestAnimationFrame ||
 **returns void
 */
 var render = function () {
-    context.clearRect(0, 0, 600, 400);
     ball.render(context);
     player1.render(context);
     comp.render(context);
@@ -65,7 +64,7 @@ var drawCourt = function() {
     //draw table outline
     var tableWidth = 525;
     var tableHeight = 330;
-    var tableBorderWidth = 10;
+    var tableBorderWidth = 8;
     var defaultLineColor = 'orange';
 
     context.strokeStyle = defaultLineColor;
@@ -85,14 +84,23 @@ var drawCourt = function() {
 };
 
 /*
+**desc clears a place for the paddle
+*/
+var clearPaddle = function () {
+    context.clearRect(55, 39, 10, 322);
+};
+
+/*
 **desc moves the player's paddle
 */
 var movePlayer = function (e) {    
-    if (e.keyCode == "38") {
+    if (e.keyCode == "38" && player1.paddle.y > 41) {
+        clearPaddle();
         player1.paddle.move("up");
     }
     
-    if (e.keyCode == "40") {
+    if (e.keyCode == "40" && player1.paddle.y < 322) {
+        clearPaddle();
         player1.paddle.move("down");
     }
 };
