@@ -3,14 +3,17 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Super Pong</title>
-    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
-    
-    
-    <canvas id='pong-table' width="600" height="400" style="background-color:#00b3b3"/>
-    
-    
+    <div id="canvas-div" style="position:relative; width:800px; height:600px">
+        <canvas id="pong-background" style="z-index: 1; position:absolute; left:0px; top:0px;" width="600" height="400px">
+        This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+        <canvas id="pong-table" style="z-index: 2; position:absolute; left:2px; top:2px;" width="596" height="396px">
+        This text is displayed if your browser does not support HTML5 Canvas.
+        </canvas>
+    </div>
  <!--   <script type="text/javascript" src="../scripts/render.js"></script> -->
     <script type="text/javascript" src="../scripts/fixtures/Ball.js"></script>
     <script type="text/javascript" src="../scripts/fixtures/Paddle.js"></script>

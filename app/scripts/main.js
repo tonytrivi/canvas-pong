@@ -3,6 +3,8 @@
 */
 var canvas = null;
 var context = null;
+var canvasBackground = null;
+var contextBackground = null;
 
 /*
 **desc game elements
@@ -17,6 +19,9 @@ var comp = null;
 var initializeGameElements = function () {
     canvas = document.getElementById('pong-table');
     context = canvas.getContext('2d');
+    canvasBackground = document.getElementById('pong-background');
+    contextBackground = canvasBackground.getContext('2d');
+    
     ball = new Ball();
     player1 = new Player();
     comp = new Computer();
@@ -26,6 +31,7 @@ var initializeGameElements = function () {
 **desc renders game elements in the game loop
 */
 var step = function () {
+    ball.move();
     render();
     animate(step);
 };
@@ -45,9 +51,10 @@ var animate = window.requestAnimationFrame ||
 **returns void
 */
 var render = function () {
-    ball.render(context);
+    context.clearRect(0, 0, 400, 400);
     player1.render(context);
     comp.render(context);
+    ball.render(context);
 };
 
 /*
@@ -63,27 +70,27 @@ var drawCourt = function() {
     var tableBorderWidth = 9;
     var defaultLineColor = 'orange';
 
-    context.strokeStyle = defaultLineColor;
-    context.lineWidth = tableBorderWidth;
-    context.strokeRect(35, 35, tableWidth, tableHeight);
+    contextBackground.strokeStyle = defaultLineColor;
+    contextBackground.lineWidth = tableBorderWidth;
+    contextBackground.strokeRect(35, 35, tableWidth, tableHeight);
 
     //mid line
-    context.setLineDash([8, 12]);
+    contextBackground.setLineDash([8, 12]);
 
-    context.beginPath();
-    context.moveTo(300,35);
-    context.lineTo(300, 355);
-    context.stroke();
+    contextBackground.beginPath();
+    contextBackground.moveTo(300,35);
+    contextBackground.lineTo(300, 355);
+    contextBackground.stroke();
     
     //reset line dash
-    context.setLineDash([0,0]);
+    contextBackground.setLineDash([0,0]);
 };
 
 /*
 **desc clears a place for the paddle
 */
 var clearPaddle = function () {
-    context.clearRect(55, 40, 10, 320);
+    context.clearRect(55, 40, 10, 35);
 };
 
 /*
