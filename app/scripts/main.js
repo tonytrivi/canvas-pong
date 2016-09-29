@@ -65,9 +65,9 @@ var drawCourt = function() {
     initializeGameElements();
     
     //draw table outline
-    var tableWidth = 525;
-    var tableHeight = 330;
-    var tableBorderWidth = 9;
+    var tableWidth = 530;
+    var tableHeight = 329;
+    var tableBorderWidth = 10;
     var defaultLineColor = 'orange';
 
     contextBackground.strokeStyle = defaultLineColor;
@@ -75,11 +75,11 @@ var drawCourt = function() {
     contextBackground.strokeRect(35, 35, tableWidth, tableHeight);
 
     //mid line
-    contextBackground.setLineDash([8, 12]);
+    contextBackground.setLineDash([8, 10]);
 
     contextBackground.beginPath();
-    contextBackground.moveTo(300,35);
-    contextBackground.lineTo(300, 355);
+    contextBackground.moveTo(300,42);
+    contextBackground.lineTo(300, 360);
     contextBackground.stroke();
     
     //reset line dash
@@ -90,19 +90,19 @@ var drawCourt = function() {
 **desc clears a place for the paddle
 */
 var clearPaddle = function () {
-    context.clearRect(55, 40, 10, 35);
+    //context.clearRect(55, 40, 10, 35);
 };
 
 /*
 **desc moves the player's paddle
 */
 var movePlayer = function (e) {    
-    if (e.keyCode == "38" && player1.paddle.y > 41) {
+    if (e.keyCode == "38" && player1.paddle.y > 40) {
         clearPaddle();
         player1.paddle.move("up");
     }
     
-    if (e.keyCode == "40" && player1.paddle.y < 322) {
+    if (e.keyCode == "40" && player1.paddle.y < 320) {
         clearPaddle();
         player1.paddle.move("down");
     }

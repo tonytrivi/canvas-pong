@@ -1,6 +1,6 @@
 function Ball() {  
-    this.height = 1;
-    this.width = 1;
+    this.height = 6;
+    this.width = 6;
     this.x = 85;
     this.y = 145;
     this.speedX = 1;
