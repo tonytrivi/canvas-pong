@@ -12,6 +12,12 @@ var contextBackground = null;
 var ball = null;
 var player1 = null;
 var comp = null;
+var ballStartX = 100;
+var ballStartY = 135;
+var leftBoundary = 65;   //left paddle edge + paddle width
+var rightBoundary = 524; //right paddle edge
+var topBoundary = 40;   //left paddle edge + paddle width
+var bottomBoundary = 352; //right paddle edge
 
 /*
 **desc initial game prep
@@ -22,7 +28,7 @@ var initializeGameElements = function () {
     canvasBackground = document.getElementById('pong-background');
     contextBackground = canvasBackground.getContext('2d');
     
-    ball = new Ball();
+    ball = new Ball(ballStartX, ballStartY, leftBoundary, rightBoundary, topBoundary, bottomBoundary);
     player1 = new Player();
     comp = new Computer();
 };
@@ -51,7 +57,7 @@ var animate = window.requestAnimationFrame ||
 **returns void
 */
 var render = function () {
-    context.clearRect(0, 0, 400, 400);
+    context.clearRect(0, 0, 600, 400);
     player1.render(context);
     comp.render(context);
     ball.render(context);
