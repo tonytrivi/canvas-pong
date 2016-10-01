@@ -3,21 +3,24 @@
 */
 var canvas = null;
 var context = null;
-var canvasBackground = null;
-var contextBackground = null;
 
 /*
-**desc game elements
+**desc game element dimensions
 */
 var ball = null;
 var player1 = null;
 var comp = null;
-var ballStartX = 100;
+var tableStartX = 35;
+var tableStartY = 35;
+var tableWidth = 530;
+var tableHeight = 329;
+var tableBorderWidth = 10;
+var ballStartX = 350;
 var ballStartY = 135;
-var leftBoundary = 65;   //left paddle edge + paddle width
-var rightBoundary = 524; //right paddle edge
-var topBoundary = 40;   //left paddle edge + paddle width
-var bottomBoundary = 352; //right paddle edge
+var leftBoundary = 65;    //left paddle edge + paddle width
+var rightBoundary = 524;  //right paddle edge
+var topBoundary = 40;     //top of court
+var bottomBoundary = 352; //bottom of court
 
 /*
 **desc initial game prep
@@ -25,9 +28,7 @@ var bottomBoundary = 352; //right paddle edge
 var initializeGameElements = function () {
     canvas = document.getElementById('pong-table');
     context = canvas.getContext('2d');
-    canvasBackground = document.getElementById('pong-background');
-    contextBackground = canvasBackground.getContext('2d');
-    
+
     ball = new Ball(ballStartX, ballStartY, leftBoundary, rightBoundary, topBoundary, bottomBoundary);
     player1 = new Player();
     comp = new Computer();
@@ -37,7 +38,7 @@ var initializeGameElements = function () {
 **desc renders game elements in the game loop
 */
 var step = function () {
-    ball.move();
+    ball.update(player1.paddle);
     render();
     animate(step);
 };
@@ -57,10 +58,9 @@ var animate = window.requestAnimationFrame ||
 **returns void
 */
 var render = function () {
-    context.clearRect(0, 0, 600, 400);
+    ball.render(context);
     player1.render(context);
     comp.render(context);
-    ball.render(context);
 };
 
 /*
@@ -71,25 +71,22 @@ var drawCourt = function() {
     initializeGameElements();
     
     //draw table outline
-    var tableWidth = 530;
-    var tableHeight = 329;
-    var tableBorderWidth = 10;
     var defaultLineColor = 'orange';
 
-    contextBackground.strokeStyle = defaultLineColor;
-    contextBackground.lineWidth = tableBorderWidth;
-    contextBackground.strokeRect(35, 35, tableWidth, tableHeight);
+    context.strokeStyle = defaultLineColor;
+    context.lineWidth = tableBorderWidth;
+    context.strokeRect(tableStartX, tableStartY, tableWidth, tableHeight);
 
     //mid line
-    contextBackground.setLineDash([8, 10]);
+    context.setLineDash([8, 10]);
 
-    contextBackground.beginPath();
-    contextBackground.moveTo(300,42);
-    contextBackground.lineTo(300, 360);
-    contextBackground.stroke();
+    context.beginPath();
+    context.moveTo(300,42);
+    context.lineTo(300, 360);
+    context.stroke();
     
     //reset line dash
-    contextBackground.setLineDash([0,0]);
+    context.setLineDash([0,0]);
 };
 
 /*

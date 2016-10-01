@@ -1,13 +1,15 @@
-/*
 #pong-table { 
-   background-color: yellow;   
-}
-*/
-
-#pong-background { 
+    position:absolute; 
+    left:0px; 
+    top:0px;
     background-color: red; 
 }
 
+#canvas-div {
+    position:relative;
+    width:800px; 
+    height:600px;
+}
 
 
 
