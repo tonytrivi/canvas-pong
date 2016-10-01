@@ -38,7 +38,14 @@ var initializeGameElements = function () {
 **desc renders game elements in the game loop
 */
 var step = function () {
+    if (ball.scoreIncremented == true) {
+        logScore(ball);
+        ball.reset(ballStartX,ballStartY);
+    }
+    
     ball.update(player1.paddle,comp.paddle);
+    //chase the ball
+    comp.update(ball,leftBoundary,rightBoundary);
     render();
     animate(step);
 };
@@ -107,4 +114,12 @@ var movePlayer = function (e) {
 */
 var keyDownHandler = function (e) {
     movePlayer(e);
+};
+
+/*
+**desc callback function for keypress
+*/
+var logScore = function (ball) {
+    console.log("player score: " + ball.playerScore);
+    console.log("computer score: " + ball.computerScore);
 };

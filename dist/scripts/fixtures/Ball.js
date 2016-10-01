@@ -9,6 +9,9 @@ function Ball(startX, startY, leftBoundary, rightBoundary) {
     this.rightBoundary = rightBoundary;
     this.topBoundary = topBoundary;
     this.bottomBoundary = bottomBoundary;      
+    this.scoreIncremented = false;
+    this.playerScore = 0;
+    this.computerScore = 0
 }
 
 Ball.prototype.render = function (context) {
@@ -33,4 +36,22 @@ Ball.prototype.update = function (leftPaddle,rightPaddle) {
     if (this.y + this.speedY > this.bottomBoundary || this.y + this.speedY < this.topBoundary) {
         this.speedY = - this.speedY;
     }
-}
+    
+    //increment score if the ball leaves the court
+    if (ball.x < (leftPaddle.x - 200) && this.scoreIncremented == false) {
+        this.computerScore++;
+        this.scoreIncremented = true;
+    }
+    if (ball.x > (rightPaddle.x + 200) && this.scoreIncremented == false) {
+        this.playerScore++;
+        this.scoreIncremented = true;
+    }
+};
+
+Ball.prototype.reset = function (startX,startY) {
+    this.scoreIncremented = false;
+    this.x = startX;
+    this.y = startY;
+    this.speedX = Math.floor(Math.random() * 4 - 4);
+    this.speedY = 2 - Math.abs(this.speedX);
+};
