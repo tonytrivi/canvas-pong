@@ -46,7 +46,7 @@ var step = function () {
 /*
 **desc animates the game
 */
-var animate = window.requestAnimationFrame || 
+var animate = window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame    ||
         window.oRequestAnimationFrame      ||
@@ -58,6 +58,8 @@ var animate = window.requestAnimationFrame ||
 **returns void
 */
 var render = function () {
+  // clear and redraw each time we render()
+    drawCourt();
     ball.render(context);
     player1.render(context);
     comp.render(context);
@@ -67,36 +69,39 @@ var render = function () {
 **desc lays out the court and playing elements
 **returns void
 */
+initializeGameElements();
+
 var drawCourt = function() {
-    initializeGameElements();
-    
-    //draw table outline
-    var defaultLineColor = 'orange';
+  // initializeGameElements();
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-    context.strokeStyle = defaultLineColor;
-    context.lineWidth = tableBorderWidth;
-    context.strokeRect(tableStartX, tableStartY, tableWidth, tableHeight);
+  //draw table outline
+  var defaultLineColor = 'orange';
 
-    //mid line
-    context.setLineDash([8, 10]);
+  context.strokeStyle = defaultLineColor;
+  context.lineWidth = tableBorderWidth;
+  context.strokeRect(tableStartX, tableStartY, tableWidth, tableHeight);
 
-    context.beginPath();
-    context.moveTo(300,42);
-    context.lineTo(300, 360);
-    context.stroke();
-    
-    //reset line dash
-    context.setLineDash([0,0]);
+  //mid line
+  context.setLineDash([8, 10]);
+
+  context.beginPath();
+  context.moveTo(300,42);
+  context.lineTo(300, 360);
+  context.stroke();
+
+  //reset line dash
+  context.setLineDash([0,0]);
 };
 
 /*
 **desc moves the player's paddle
 */
-var movePlayer = function (e) {    
+var movePlayer = function (e) {
     if (e.keyCode == "38" && player1.paddle.y > 40) {
         player1.paddle.move("up");
     }
-    
+
     if (e.keyCode == "40" && player1.paddle.y < 320) {
         player1.paddle.move("down");
     }
