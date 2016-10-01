@@ -23,17 +23,14 @@ Ball.prototype.move = function () {
     this.y += this.speedY;
 };
 
-Ball.prototype.update = function (leftPaddle) {
+Ball.prototype.update = function (leftPaddle,rightPaddle) {
     ball.move();
     
-    //create the boundaries for the ball
-    if (((this.x + this.speedX <= this.leftBoundary && this.x + this.speedX > this.leftBoundary - 6) && (this.y >= (leftPaddle.y - 5) && this.y <= (leftPaddle.y + 5) + leftPaddle.height)) || this.x + this.speedX > this.rightBoundary) {
+    //boundaries for the ball
+    if (((this.x + this.speedX <= this.leftBoundary && this.x + this.speedX > this.leftBoundary - 6) && (this.y >= (leftPaddle.y - 5) && this.y <= (leftPaddle.y + 5) + leftPaddle.height)) || ((this.x + this.speedX >= this.rightBoundary && this.x + this.speedX < this.rightBoundary + 6) && (this.y >= (rightPaddle.y - 5) && this.y <= (rightPaddle.y + 5) + rightPaddle.height))) {
         this.speedX = - this.speedX;
     }
     if (this.y + this.speedY > this.bottomBoundary || this.y + this.speedY < this.topBoundary) {
         this.speedY = - this.speedY;
     }
 }
-
- //if ((this.x + this.speedX <= this.leftBoundary && (this.y >= (leftPaddle.y - 5) && this.y <= (leftPaddle.y + 5) + leftPaddle.height)) || this.x + //this.speedX > this.rightBoundary) {
-

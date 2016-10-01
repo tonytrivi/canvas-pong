@@ -38,7 +38,7 @@ var initializeGameElements = function () {
 **desc renders game elements in the game loop
 */
 var step = function () {
-    ball.update(player1.paddle);
+    ball.update(player1.paddle,comp.paddle);
     render();
     animate(step);
 };
@@ -90,23 +90,14 @@ var drawCourt = function() {
 };
 
 /*
-**desc clears a place for the paddle
-*/
-var clearPaddle = function () {
-    //context.clearRect(55, 40, 10, 35);
-};
-
-/*
 **desc moves the player's paddle
 */
 var movePlayer = function (e) {    
     if (e.keyCode == "38" && player1.paddle.y > 40) {
-        clearPaddle();
         player1.paddle.move("up");
     }
     
     if (e.keyCode == "40" && player1.paddle.y < 320) {
-        clearPaddle();
         player1.paddle.move("down");
     }
 };

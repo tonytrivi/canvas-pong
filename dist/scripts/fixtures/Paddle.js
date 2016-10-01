@@ -3,7 +3,7 @@ function Paddle(x, y) {
     this.y = y;
     this.width = 10;
     this.height = 35;
-    this.speed = 5;
+    this.speed = 7;
 }
 Paddle.prototype.render = function () {
     context.fillStyle = 'pink';
