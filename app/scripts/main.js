@@ -35,13 +35,24 @@ var initializeGameElements = function () {
 };
 
 /*
+**desc updates the viewable score
+*/
+var updateScore = function () {
+    var playerScoreElement = document.getElementById("player-score");
+    var computerScoreElement = document.getElementById("computer-score");
+    
+    playerScoreElement.innerHTML = ball.playerScore;
+    computerScoreElement.innerHTML = ball.computerScore;
+};
+
+/*
 **desc renders game elements in the game loop
 */
 var step = function () {
     if (ball.scoreIncremented == true) {
-        logScore(ball);
         ball.reset(ballStartX,ballStartY);
-    }
+        updateScore();
+};
     
     ball.update(player1.paddle,comp.paddle);
     //chase the ball
@@ -116,12 +127,4 @@ var movePlayer = function (e) {
 */
 var keyDownHandler = function (e) {
     movePlayer(e);
-};
-
-/*
-**desc callback function for keypress
-*/
-var logScore = function (ball) {
-    console.log("player score: " + ball.playerScore);
-    console.log("computer score: " + ball.computerScore);
 };
