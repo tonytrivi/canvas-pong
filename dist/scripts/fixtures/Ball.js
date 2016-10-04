@@ -15,7 +15,6 @@ function Ball(startX, startY, leftBoundary, rightBoundary) {
 }
 
 Ball.prototype.render = function (context) {
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.fillStyle = 'blue';
     context.setLineDash([0,0]);
     context.fillRect(this.x, this.y, this.height, this.width);

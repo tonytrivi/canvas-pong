@@ -65,6 +65,7 @@ var animate = window.requestAnimationFrame ||
 **returns void
 */
 var render = function () {
+    drawCourt();
     ball.render(context);
     player1.render(context);
     comp.render(context);
@@ -75,8 +76,7 @@ var render = function () {
 **returns void
 */
 var drawCourt = function() {
-    initializeGameElements();
-    
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     //draw table outline
     var defaultLineColor = 'orange';
 
