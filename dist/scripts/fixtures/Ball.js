@@ -3,16 +3,15 @@ function Ball(startX, startY, leftBoundary, rightBoundary) {
     this.width = 7;
     this.x = startX;
     this.y = startY;
-    this.speedX = Math.floor(Math.random() * 4 - 4);
-    this.speedY = 2 - Math.abs(this.speedX);
+    this.speedX = this.getRandomInt(-2,-4);
+    this.speedY = this.getRandomInt(2,4);
     this.leftBoundary = leftBoundary;
     this.rightBoundary = rightBoundary;
     this.topBoundary = topBoundary;
     this.bottomBoundary = bottomBoundary;      
     this.scoreIncremented = false;
     this.playerScore = 0;
-    this.computerScore = 0
-    this.bottomBoundary = bottomBoundary;
+    this.computerScore = 0;
 }
 
 Ball.prototype.render = function (context) {
@@ -51,7 +50,18 @@ Ball.prototype.reset = function (startX,startY) {
     this.scoreIncremented = false;
     this.x = startX;
     this.y = startY;
-    this.speedX = Math.floor(Math.random() * 4 - 4);
-    this.speedY = 2 - Math.abs(this.speedX);
+    this.speedX = this.getRandomInt(-3,2);
+    this.speedY = this.getRandomInt(2,3);
+    //console.log("speed x: " + this.speedX);
+    //console.log("speed y: " + this.speedY);
+};
+
+Ball.prototype.getRandomInt = function (min, max) {
+    var setting = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (setting == 0) {
+        setting = 2;
+    }
+    
+    return setting;
 };
 

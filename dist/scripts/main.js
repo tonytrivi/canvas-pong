@@ -32,6 +32,7 @@ var initializeGameElements = function () {
     ball = new Ball(ballStartX, ballStartY, leftBoundary, rightBoundary, topBoundary, bottomBoundary);
     player1 = new Player();
     comp = new Computer();
+    updateScore();
 };
 
 /*
