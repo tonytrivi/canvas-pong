@@ -1,6 +1,6 @@
 function Computer() {
     this.paddle = new Paddle(530, 110);
-    this.paddle.speed = 1;
+    this.paddle.speed = 1.5;
 }
 
 Computer.prototype.render = function (context) {

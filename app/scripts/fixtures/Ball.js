@@ -3,8 +3,8 @@ function Ball(startX, startY, leftBoundary, rightBoundary) {
     this.width = 7;
     this.x = startX;
     this.y = startY;
-    this.speedX = this.getRandomInt(-2,-4);
-    this.speedY = this.getRandomInt(2,4);
+    this.speedX = this.getRandomInt(-2,3);
+    this.speedY = this.getRandomInt(-4,-2);
     this.leftBoundary = leftBoundary;
     this.rightBoundary = rightBoundary;
     this.topBoundary = topBoundary;
@@ -36,11 +36,11 @@ Ball.prototype.update = function (leftPaddle,rightPaddle) {
     }
     
     //increment score if the ball leaves the court
-    if (ball.x < (leftPaddle.x - 200) && this.scoreIncremented == false) {
+    if (ball.x < (leftPaddle.x - 150) && this.scoreIncremented == false) {
         this.computerScore++;
         this.scoreIncremented = true;
     }
-    if (ball.x > (rightPaddle.x + 200) && this.scoreIncremented == false) {
+    if (ball.x > (rightPaddle.x + 150) && this.scoreIncremented == false) {
         this.playerScore++;
         this.scoreIncremented = true;
     }

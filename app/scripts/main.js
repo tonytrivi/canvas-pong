@@ -1,26 +1,34 @@
 /*
 **desc court
 */
-var canvas = null;
+var canvas  = null;
 var context = null;
 
 /*
-**desc game element dimensions
+**desc game dimensions and elements
 */
-var ball = null;
+var ball    = null;
 var player1 = null;
-var comp = null;
-var tableStartX = 35;
-var tableStartY = 35;
-var tableWidth = 530;
-var tableHeight = 329;
+var comp    = null;
+var tableStartX      = 35;
+var tableStartY      = 35;
+var tableWidth       = 530;
+var tableHeight      = 329;
 var tableBorderWidth = 10;
-var ballStartX = 350;
-var ballStartY = 135;
-var leftBoundary = 65;    //left paddle edge + paddle width
-var rightBoundary = 524;  //right paddle edge
-var topBoundary = 40;     //top of court
-var bottomBoundary = 352; //bottom of court
+var ballStartX       = 350;
+var ballStartY       = 135;
+var leftBoundary     = 65;   //left paddle edge + paddle width
+var rightBoundary    = 524;  //right paddle edge
+var topBoundary      = 40;   //top of court
+var bottomBoundary   = 352;  //bottom of court
+var scoreToWin       = 11;
+var playerScoreElement   = null;
+var computerScoreElement = null;
+var endMessageElement    = null;
+var instructionsElement  = null;
+var instructions = "Refresh to play again."
+var youWin       = "You win!";
+var youLose      = "You lose.";
 
 /*
 **desc initial game prep
@@ -28,6 +36,11 @@ var bottomBoundary = 352; //bottom of court
 var initializeGameElements = function () {
     canvas = document.getElementById('pong-table');
     context = canvas.getContext('2d');
+    
+    playerScoreElement = document.getElementById("player-score");
+    computerScoreElement = document.getElementById("computer-score");
+    endMessageElement = document.getElementById("end-message");
+    instructionsElement = document.getElementById("instructions");
 
     ball = new Ball(ballStartX, ballStartY, leftBoundary, rightBoundary, topBoundary, bottomBoundary);
     player1 = new Player();
@@ -39,9 +52,6 @@ var initializeGameElements = function () {
 **desc updates the viewable score
 */
 var updateScore = function () {
-    var playerScoreElement = document.getElementById("player-score");
-    var computerScoreElement = document.getElementById("computer-score");
-    
     playerScoreElement.innerHTML = ball.playerScore;
     computerScoreElement.innerHTML = ball.computerScore;
 };
@@ -51,9 +61,21 @@ var updateScore = function () {
 */
 var step = function () {
     if (ball.scoreIncremented == true) {
-        ball.reset(ballStartX,ballStartY);
+        //check if game should end
+        if (ball.playerScore == scoreToWin) {
+            endMessageElement.innerHTML = youWin;
+            instructionsElement.innerHTML = instructions;
+        }
+        else if (ball.computerScore == scoreToWin) {
+            endMessageElement.innerHTML = youLose;
+            instructionsElement.innerHTML = instructions;
+        }
+        else {
+            ball.reset(ballStartX,ballStartY);
+        } 
+        
         updateScore();
-};
+    };
     
     ball.update(player1.paddle,comp.paddle);
     //chase the ball
