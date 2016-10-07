@@ -7,9 +7,10 @@ var context = null;
 /*
 **desc game dimensions and elements
 */
-var ball    = null;
-var player1 = null;
-var comp    = null;
+var ball         = null;
+var player1      = null;
+var comp         = null;
+var ballOutEvent = null;
 var tableStartX      = 35;
 var tableStartY      = 35;
 var tableWidth       = 530;
@@ -29,6 +30,10 @@ var instructionsElement  = null;
 var instructions = "Refresh to play again."
 var youWin       = "You win!";
 var youLose      = "You lose.";
+var playerScore   = 0;
+var computerScore = 0;
+var incrementScore = false;
+var gameOver = false;
 
 /*
 **desc initial game prep
@@ -37,11 +42,12 @@ var initializeGameElements = function () {
     canvas = document.getElementById('pong-table');
     context = canvas.getContext('2d');
     
+    //DOM elements
     playerScoreElement = document.getElementById("player-score");
     computerScoreElement = document.getElementById("computer-score");
     endMessageElement = document.getElementById("end-message");
     instructionsElement = document.getElementById("instructions");
-
+    
     ball = new Ball(ballStartX, ballStartY, leftBoundary, rightBoundary, topBoundary, bottomBoundary);
     player1 = new Player();
     comp = new Computer();
@@ -52,36 +58,41 @@ var initializeGameElements = function () {
 **desc updates the viewable score
 */
 var updateScore = function () {
-    playerScoreElement.innerHTML = ball.playerScore;
-    computerScoreElement.innerHTML = ball.computerScore;
+    playerScoreElement.innerHTML    = playerScore;
+    computerScoreElement.innerHTML  = computerScore;
+    ball.reset(ballStartX,ballStartY);
 };
 
 /*
 **desc renders game elements in the game loop
 */
 var step = function () {
-    if (ball.scoreIncremented == true) {
+    if (incrementScore == true) {
         //check if game should end
-        if (ball.playerScore == scoreToWin) {
+        if (playerScore == scoreToWin) {
             endMessageElement.innerHTML = youWin;
             instructionsElement.innerHTML = instructions;
+            gameOver = true;
         }
-        else if (ball.computerScore == scoreToWin) {
+        else if (computerScore == scoreToWin) {
             endMessageElement.innerHTML = youLose;
             instructionsElement.innerHTML = instructions;
+            gameOver = true;
         }
-        else {
-            ball.reset(ballStartX,ballStartY);
-        } 
         
         updateScore();
+        incrementScore = false;
     };
     
-    ball.update(player1.paddle,comp.paddle);
-    //chase the ball
-    comp.update(ball,leftBoundary,rightBoundary);
-    render();
-    animate(step);
+    if (gameOver == false) {
+        ball.update(player1.paddle,comp.paddle);
+        //chase the ball
+        comp.update(ball,leftBoundary,rightBoundary);
+        render();
+        animate(step);
+    } 
+    
+    
 };
 
 /*
@@ -127,8 +138,6 @@ var drawCourt = function() {
   context.moveTo(300,42);
   context.lineTo(300, 360);
   context.stroke();
-
-  //reset line dash
   context.setLineDash([0,0]);
 };
 
@@ -151,3 +160,16 @@ var movePlayer = function (e) {
 var keyDownHandler = function (e) {
     movePlayer(e);
 };
+
+/*
+**desc listener for when the ball leaves the court
+*/
+document.addEventListener('ball-out', function (e) {
+    incrementScore = true;
+    if (e.detail == "computer-scored") {
+        computerScore++;
+    }
+    if (e.detail == "player-scored") {
+        playerScore++;
+    }
+}, false);

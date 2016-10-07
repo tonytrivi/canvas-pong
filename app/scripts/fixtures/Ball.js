@@ -9,7 +9,6 @@ function Ball(startX, startY, leftBoundary, rightBoundary) {
     this.rightBoundary = rightBoundary;
     this.topBoundary = topBoundary;
     this.bottomBoundary = bottomBoundary;      
-    this.scoreIncremented = false;
     this.playerScore = 0;
     this.computerScore = 0;
 }
@@ -35,25 +34,22 @@ Ball.prototype.update = function (leftPaddle,rightPaddle) {
         this.speedY = - this.speedY;
     }
     
-    //increment score if the ball leaves the court
-    if (ball.x < (leftPaddle.x - 150) && this.scoreIncremented == false) {
-        this.computerScore++;
-        this.scoreIncremented = true;
+    //the ball left the court
+    if (ball.x < (leftPaddle.x - 150)) {
+        var computerScoredEvent = new CustomEvent('ball-out', { 'detail': 'computer-scored' });
+        document.dispatchEvent(computerScoredEvent);
     }
-    if (ball.x > (rightPaddle.x + 150) && this.scoreIncremented == false) {
-        this.playerScore++;
-        this.scoreIncremented = true;
+    if (ball.x > (rightPaddle.x + 150)) {
+        var playerScoredEvent = new CustomEvent('ball-out', { 'detail': 'player-scored' });
+        document.dispatchEvent(playerScoredEvent);
     }
 };
 
 Ball.prototype.reset = function (startX,startY) {
-    this.scoreIncremented = false;
     this.x = startX;
     this.y = startY;
     this.speedX = this.getRandomInt(-3,2);
     this.speedY = this.getRandomInt(2,3);
-    //console.log("speed x: " + this.speedX);
-    //console.log("speed y: " + this.speedY);
 };
 
 Ball.prototype.getRandomInt = function (min, max) {

@@ -9,10 +9,10 @@ Computer.prototype.render = function (context) {
 
 Computer.prototype.update = function (ball) {
     //change computer position
-    if ((ball.y > (this.paddle.y + 16)) && (ball.x > leftBoundary && ball.x < rightBoundary)) {
+    if ((ball.y > (this.paddle.y + this.paddle.height/2)) && (ball.x > leftBoundary && ball.x < rightBoundary)) {
         this.paddle.move("down");
     }
-    if ((ball.y < (this.paddle.y + 16)) && (ball.x > leftBoundary && ball.x < rightBoundary)) {
+    if ((ball.y < (this.paddle.y + this.paddle.height/2)) && (ball.x > leftBoundary && ball.x < rightBoundary)) {
         this.paddle.move("up");
     }
 };
